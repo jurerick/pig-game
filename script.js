@@ -4,10 +4,12 @@ const rollBtn = document.querySelector('.btn--roll');
 const holdBtn = document.querySelector('.btn--hold');
 const dice = document.querySelector('.dice');
 const maxScore = 100;
+const playing = true;
 let currentPlayer = 0;
 
 const newGame = () => {
   currentPlayer = 0;
+  playing = true;
   document.querySelectorAll('.current-score').forEach((item) => {
     item.textContent = 0;
   });
@@ -24,37 +26,41 @@ const newGame = () => {
 }
 
 const rollDice = () => {
-  const diceResult = Math.trunc(Math.random() * 6) + 1;
-  if(diceResult === 1) {
-    displayDice(diceResult);
-    saveCurrentScore(0);
-    changePlayer();
-  }
-  else {
-    displayDice(diceResult);
-    saveCurrentScore(diceResult);
+  if(playing) {
+    const diceResult = Math.trunc(Math.random() * 6) + 1;
+    if(diceResult === 1) {
+      displayDice(diceResult);
+      saveCurrentScore(0);
+      changePlayer();
+    }
+    else {
+      displayDice(diceResult);
+      saveCurrentScore(diceResult);
+    }
   }
 }
 
 const hold = () => {
-  let playerScore = parseInt(
-    document.getElementById(`score--${currentPlayer}`).textContent
-  );
+  if(playing) {
+    let playerScore = parseInt(
+      document.getElementById(`score--${currentPlayer}`).textContent
+    );
 
-  const currentScore = parseInt(
-    document.getElementById(`current--${currentPlayer}`).textContent
-  );
+    const currentScore = parseInt(
+      document.getElementById(`current--${currentPlayer}`).textContent
+    );
 
-  playerScore = playerScore + currentScore;
-  document.getElementById(`score--${currentPlayer}`).textContent =
-      playerScore;
+    playerScore = playerScore + currentScore;
+    document.getElementById(`score--${currentPlayer}`).textContent =
+        playerScore;
 
-  saveCurrentScore(0);
-  if(playerScore >= maxScore) {
-    setWinner();
-  }
-  else {
-    changePlayer();
+    saveCurrentScore(0);
+    if(playerScore >= maxScore) {
+      setWinner();
+    }
+    else {
+      changePlayer();
+    }
   }
 }
 
@@ -65,6 +71,7 @@ const setWinner = () => {
     .classList.add('player--winner');
   rollBtn.setAttribute('disabled', 'disabled');
   holdBtn.setAttribute('disabled', 'disabled');
+  playing = false;
 }
 
 const changePlayer = (player) => {
