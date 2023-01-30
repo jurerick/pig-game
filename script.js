@@ -4,7 +4,7 @@ const rollBtn = document.querySelector('.btn--roll');
 const holdBtn = document.querySelector('.btn--hold');
 const dice = document.querySelector('.dice');
 const maxScore = 100;
-const playing = true;
+let playing = true;
 let currentPlayer = 0;
 
 const newGame = () => {
