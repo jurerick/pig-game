@@ -24,7 +24,7 @@ const newGame = () => {
 }
 
 const rollDice = () => {
-  const diceResult = Math.floor(Math.random() * (6 - 1)) + 1;
+  const diceResult = Math.trunc(Math.random() * 6) + 1;
   if(diceResult === 1) {
     displayDice(diceResult);
     saveCurrentScore(0);
